@@ -1,5 +1,7 @@
-// API Base URL
-const API_BASE_URL = 'http://localhost:2200/api';
+// API Base URL - automatically detects the correct URL for both local and CodeSandbox
+const API_BASE_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:2200/api'
+  : `${window.location.protocol}//${window.location.host}/api`;
 
 // DOM Elements
 const cityInput = document.getElementById('city-input');
