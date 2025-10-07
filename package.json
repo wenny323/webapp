@@ -1,0 +1,11 @@
+{
+  "name": "webapp-projects",
+  "version": "1.0.0",
+  "description": "Collection of web application projects",
+  "scripts": {
+    "start": "cd 1-1 && npm install && npm start"
+  },
+  "keywords": ["nodejs", "weather", "fullstack"],
+  "author": "",
+  "license": "ISC"
+}
