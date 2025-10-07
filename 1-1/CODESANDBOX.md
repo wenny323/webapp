@@ -2,12 +2,21 @@
 
 ## 🚀 部署方式
 
-### 從 GitHub 匯入（推薦）
+### 方法 1：直接開啟連結（最快）
+點擊或複製此連結：
+```
+https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1
+```
+
+### 方法 2：從 GitHub 匯入
 1. 前往 [CodeSandbox.io](https://codesandbox.io)
 2. 點擊 "Import from GitHub"
-3. 輸入：`https://github.com/wenny323/webapp`
-4. 選擇 `1-1` 資料夾
-5. 自動啟動
+3. 輸入：`https://github.com/wenny323/webapp/tree/main/1-1`
+4. 自動啟動
+
+### 方法 3：從根目錄匯入
+1. Import：`https://github.com/wenny323/webapp`
+2. 根目錄的 `package.json` 會自動進入 `1-1` 資料夾並啟動
 
 ### 自動執行流程
 CodeSandbox 會自動：

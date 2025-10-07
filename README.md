@@ -27,7 +27,14 @@ npm start
 
 ### CodeSandbox 部署
 
-Import from GitHub: `https://github.com/wenny323/webapp`
+**快速開啟 1-1 專案**：
+```
+https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1
+```
+
+或 Import from GitHub: `https://github.com/wenny323/webapp/tree/main/1-1`
+
+📖 [完整 Import 指南](./IMPORT.md)
 
 ## 📋 專案結構
 
