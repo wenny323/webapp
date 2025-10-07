@@ -4,18 +4,29 @@
 
 ## 📂 專案列表
 
-### [1-1: Weather App](./1-1/)
-完整的天氣應用程式 - Node.js Full Stack
+### [1-1: Weather App (前後端分離)](./1-1/)
+完整的天氣應用程式 - 前後端分離架構
 
 **技術棧**: Node.js, Express, Vanilla JavaScript  
 **Port**: 2200  
+**特色**: REST API, 客戶端渲染, AJAX  
 **功能**: 即時天氣查詢、搜尋歷史、響應式 UI
 
-📖 [查看詳細說明](./1-1/README.md)
+📖 [查看詳細說明](./1-1/README.md) | 🚀 [CodeSandbox](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1)
+
+### [1-2: Weather App (純後端渲染)](./1-2/)
+完整的天氣應用程式 - 伺服器端渲染架構
+
+**技術棧**: Node.js, Express, EJS  
+**Port**: 3500  
+**特色**: Server-Side Rendering, HTML Form, 傳統 Web  
+**功能**: 即時天氣查詢、搜尋歷史、後端渲染
+
+📖 [查看詳細說明](./1-2/README.md) | 🚀 [CodeSandbox](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2)
 
 ## 🚀 快速開始
 
-### 運行專案 1-1
+### 運行專案 1-1 (Port 2200)
 
 ```bash
 cd 1-1
@@ -25,14 +36,21 @@ npm start
 
 然後在瀏覽器開啟：`http://localhost:2200`
 
+### 運行專案 1-2 (Port 3500)
+
+```bash
+cd 1-2
+npm install
+npm start
+```
+
+然後在瀏覽器開啟：`http://localhost:3500`
+
 ### CodeSandbox 部署
 
-**快速開啟 1-1 專案**：
-```
-https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1
-```
-
-或 Import from GitHub: `https://github.com/wenny323/webapp/tree/main/1-1`
+**快速開啟連結**:
+- **1-1 專案** (Port 2200): [https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1)
+- **1-2 專案** (Port 3500): [https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2)
 
 📖 [完整 Import 指南](./IMPORT.md)
 
@@ -40,10 +58,15 @@ https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1
 
 ```
 webapp/
-├── 1-1/                        # Weather App 專案
-│   ├── server.js               # 後端伺服器
+├── 1-1/                        # Weather App (前後端分離)
+│   ├── server.js               # 後端 API 伺服器
 │   ├── package.json            # 專案設定
-│   ├── public/                 # 前端檔案
+│   ├── public/                 # 前端檔案 (HTML/CSS/JS)
+│   └── README.md               # 詳細說明
+├── 1-2/                        # Weather App (純後端渲染)
+│   ├── server.js               # 後端渲染伺服器
+│   ├── package.json            # 專案設定
+│   ├── views/                  # EJS 模板檔案
 │   └── README.md               # 詳細說明
 └── README.md                   # 本檔案
 ```
