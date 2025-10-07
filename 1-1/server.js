@@ -165,6 +165,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Handle Chrome DevTools requests (optional, to suppress 404 errors)
+app.get('/.well-known/*', (req, res) => {
+  res.status(204).end(); // No Content
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Weather App server is running on http://localhost:${PORT}`);
