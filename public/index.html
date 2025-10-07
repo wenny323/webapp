@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - Node.js</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <h1>🌤️ Weather App</h1>
+            <p class="subtitle">Powered by Node.js Backend</p>
+            
+            <div class="search-section">
+                <input 
+                    type="text" 
+                    id="city-input" 
+                    placeholder="Enter city name"
+                    class="city-input"
+                />
+                <button id="search-button" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading weather data...</p>
+            </div>
+
+            <div id="weather-info" class="weather-info hidden"></div>
+
+            <div id="error-message" class="error-message hidden"></div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-header">
+                <h2>📜 Search History</h2>
+                <button id="clear-history" class="btn btn-secondary">
+                    Clear All
+                </button>
+            </div>
+            <div id="history-list" class="history-list">
+                <p class="no-history">No search history yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
