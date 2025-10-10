@@ -24,6 +24,16 @@
 
 📖 [查看詳細說明](./1-2/README.md) | 🚀 [CodeSandbox](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2)
 
+### [1-3: To-Do List (前後端分離)](./1-3/)
+待辦事項應用程式 - 前後端分離架構 + 資料持久化
+
+**技術棧**: Node.js, Express, Vanilla JavaScript  
+**Port**: 1800  
+**特色**: REST API, JSON 儲存, CRUD 操作  
+**功能**: 新增/刪除任務、清空全部、資料持久化
+
+📖 [查看詳細說明](./1-3/README.md) | 🚀 [CodeSandbox](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-3)
+
 ## 🚀 快速開始
 
 ### 運行專案 1-1 (Port 2200)
@@ -46,11 +56,22 @@ npm start
 
 然後在瀏覽器開啟：`http://localhost:3500`
 
+### 運行專案 1-3 (Port 1800)
+
+```bash
+cd 1-3
+npm install
+npm start
+```
+
+然後在瀏覽器開啟：`http://localhost:1800`
+
 ### CodeSandbox 部署
 
 **快速開啟連結**:
 - **1-1 專案** (Port 2200): [https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-1)
 - **1-2 專案** (Port 3500): [https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-2)
+- **1-3 專案** (Port 1800): [https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-3](https://codesandbox.io/s/github/wenny323/webapp/tree/main/1-3)
 
 📖 [完整 Import 指南](./IMPORT.md)
 
@@ -67,6 +88,12 @@ webapp/
 │   ├── server.js               # 後端渲染伺服器
 │   ├── package.json            # 專案設定
 │   ├── views/                  # EJS 模板檔案
+│   └── README.md               # 詳細說明
+├── 1-3/                        # To-Do List (前後端分離)
+│   ├── server.js               # Express 伺服器
+│   ├── storage.js              # 資料儲存模組
+│   ├── package.json            # 專案設定
+│   ├── public/                 # 前端檔案 (HTML/CSS/JS)
 │   └── README.md               # 詳細說明
 └── README.md                   # 本檔案
 ```
