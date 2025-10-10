@@ -1,0 +1,25 @@
+# 依賴包
+node_modules/
+
+# 資料檔案
+todos.json
+
+# 日誌檔案
+*.log
+npm-debug.log*
+
+# 操作系統檔案
+.DS_Store
+Thumbs.db
+
+# IDE 配置檔案
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 環境變數檔案
+.env
+.env.local
+
