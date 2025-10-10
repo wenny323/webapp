@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待辦事項清單</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #app {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .clear-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: #f44336;
+        }
+
+        .clear-btn:hover {
+            background: #d32f2f;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        li span {
+            flex: 1;
+            color: #333;
+            word-break: break-word;
+        }
+
+        .remove-btn {
+            padding: 8px 16px;
+            background: #ff5252;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .remove-btn:hover {
+            background: #ff1744;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            padding: 20px;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .todo-count {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>📝 待辦事項清單</h1>
+        
+        <div id="errorMessage" class="error" style="display: none;"></div>
+        
+        <div class="input-container">
+            <input type="text" id="newTodo" placeholder="新增待辦事項..." />
+            <button onclick="addTodo()">新增</button>
+        </div>
+        
+        <div class="todo-count" id="todoCount"></div>
+        
+        <ul id="todoList"></ul>
+        
+        <button class="clear-btn" onclick="clearAllTodos()" id="clearBtn" style="display: none;">清空全部</button>
+    </div>
+
+    <script>
+        const API_BASE = '';
+        const newTodoInput = document.getElementById('newTodo');
+        const todoList = document.getElementById('todoList');
+        const todoCount = document.getElementById('todoCount');
+        const clearBtn = document.getElementById('clearBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // 页面加载时获取所有待办事项
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTodos();
+        });
+
+        // 按 Enter 键添加任务
+        newTodoInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        // 显示错误消息
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // 更新待办事项计数
+        function updateTodoCount(count) {
+            if (count === 0) {
+                todoCount.textContent = '尚無任務';
+                clearBtn.style.display = 'none';
+            } else {
+                todoCount.textContent = `您有 ${count} 個任務`;
+                clearBtn.style.display = 'block';
+            }
+        }
+
+        // 加载所有待办事项
+        async function loadTodos() {
+            try {
+                todoList.innerHTML = '<div class="loading">載入中...</div>';
+                
+                const response = await fetch(`${API_BASE}/api/todos`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderTodos(result.data);
+                } else {
+                    showError('載入失敗');
+                }
+            } catch (error) {
+                console.error('Error loading todos:', error);
+                showError('無法連接伺服器');
+                todoList.innerHTML = '<div class="empty-state">無法連接伺服器</div>';
+            }
+        }
+
+        // 渲染待办事项列表
+        function renderTodos(todos) {
+            todoList.innerHTML = '';
+            
+            if (todos.length === 0) {
+                todoList.innerHTML = '<div class="empty-state">還沒有任務，請在上方新增！</div>';
+                updateTodoCount(0);
+                return;
+            }
+            
+            updateTodoCount(todos.length);
+            
+            todos.forEach(todo => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${escapeHtml(todo.text)}</span>
+                    <button class="remove-btn" onclick="removeTodo(${todo.id})">刪除</button>
+                `;
+                todoList.appendChild(li);
+            });
+        }
+
+        // 添加新待办事项
+        async function addTodo() {
+            const todoText = newTodoInput.value.trim();
+            
+            if (todoText === '') {
+                showError('請輸入任務內容');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/todos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: todoText })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    newTodoInput.value = '';
+                    loadTodos(); // 重新加载列表
+                } else {
+                    showError(result.message || '新增失敗');
+                }
+            } catch (error) {
+                console.error('Error adding todo:', error);
+                showError('無法連接伺服器');
+            }
+        }
+
+        // 删除待办事项
+        async function removeTodo(id) {
+            try {
+                const response = await fetch(`${API_BASE}/api/todos/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadTodos(); // 重新加载列表
+                } else {
+                    showError('刪除失敗');
+                }
+            } catch (error) {
+                console.error('Error removing todo:', error);
+                showError('無法連接伺服器');
+            }
+        }
+
+        // 清空所有待办事项
+        async function clearAllTodos() {
+            if (!confirm('確定要清空所有任務嗎？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/todos`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    loadTodos(); // 重新加载列表
+                } else {
+                    showError('清空失敗');
+                }
+            } catch (error) {
+                console.error('Error clearing todos:', error);
+                showError('無法連接伺服器');
+            }
+        }
+
+        // HTML 转义函数，防止 XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
+
